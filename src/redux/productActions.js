@@ -1,5 +1,5 @@
 // productActions.js
-import { setProducts, setLoading, setError, setMaxRatedProduct, setMinRatedProduct } from './productSlice';
+import { setProducts, setLoading, setError, setMaxRatedProduct, setMinRatedProduct, setMostRatedProduct, setLeastRatedProduct } from './productSlice';
 
 export const fetchProducts = () => async (dispatch) => {
   try {
@@ -41,4 +41,31 @@ export const findMinRatedProduct = () => (dispatch, getState) => {
     }, products[0]);
   
     dispatch(setMinRatedProduct(minRatedProduct));
+};
+  
+
+export const findMostRatedProduct = () => (dispatch, getState) => {
+    const products = getState().products.data;
+    if (products.length === 0) {
+      return;
+    }
+  
+    const mostRatedProduct = products.reduce((mostRated, product) => {
+      return product.rating.count > mostRated.rating.count ? product : mostRated;
+    }, products[0]);
+  
+    dispatch(setMostRatedProduct(mostRatedProduct));
+};
+  
+export const findLeastRatedProduct = () => (dispatch, getState) => {
+    const products = getState().products.data;
+    if (products.length === 0) {
+      return;
+    }
+  
+    const leastRatedProduct = products.reduce((leastRated, product) => {
+      return product.rating.count < leastRated.rating.count ? product : leastRated;
+    }, products[0]);
+  
+    dispatch(setLeastRatedProduct(leastRatedProduct));
   };

@@ -9,6 +9,8 @@ const productSlice = createSlice({
       error: null,
       maxRatedProduct: null, // Nouveau champ pour stocker le produit avec le rating le plus élevé
       minRatedProduct: null, // Nouveau champ pour stocker le produit avec le rating le plus élevé
+      mostRatedProduct: null, // Nouveau champ pour stocker le produit le plus noté
+      leastRatedProduct: null, // Nouveau champ pour stocker le produit le moins noté
 
   },
   reducers: {
@@ -27,9 +29,15 @@ const productSlice = createSlice({
       },
       setMinRatedProduct: (state, action) => {
         state.minRatedProduct = action.payload;
-      }
+      },
+      setMostRatedProduct: (state, action) => {
+        state.mostRatedProduct = action.payload;
+      },
+      setLeastRatedProduct: (state, action) => {
+        state.leastRatedProduct = action.payload;
+      },
   },
 });
 
-export const { setProducts, setLoading, setError, setMaxRatedProduct, setMinRatedProduct  } = productSlice.actions;
+export const { setProducts, setLoading, setError, setMaxRatedProduct, setMinRatedProduct, setMostRatedProduct, setLeastRatedProduct  } = productSlice.actions;
 export default productSlice.reducer;
