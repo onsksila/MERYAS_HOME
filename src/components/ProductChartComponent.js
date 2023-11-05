@@ -46,14 +46,6 @@ function ProductChartComponent() {
     if (myChart) {
       // Get the existing labels and ratings
       const existingLabels = myChart.data.labels;
-      const existingRatings = myChart.data.datasets[0].data;
-
-      // Create a mapping of product titles to ratings for faster lookup
-      const existingDataMap = existingLabels.reduce((acc, label, index) => {
-        acc[label] = existingRatings[index];
-        return acc;
-      }, {});
-
       // Update the chart data with the new data
       myChart.data.datasets[0].data = existingLabels.map((label) => {
         return newData.find((item) => item.title === label)?.rating.rate || 0;

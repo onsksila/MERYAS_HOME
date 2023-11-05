@@ -12,7 +12,6 @@ function App() {
     <FiltersComponent />
 
         <div className="p-14 m-10 rounded-2xl bg-gray-100">
-          
             <CategoriesComponent />
             <ProductChartComponent />
          
