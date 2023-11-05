@@ -93,15 +93,15 @@ function ProductChartComponent() {
                 title: {
                   display: true,
                   text: "Rates",
+                  color: "rgb(29 78 216)",
                 },
               },
               x: {
                 title: {
                   display: true,
                   text: "Products",
+                  color: "rgb(29 78 216)",
                 },
-                maxRotation: 90, // Définit la rotation maximale à 0 degré (vertical)
-              minRotation: 90, // Définit la rotation minimale à 0 degré (vertical)
               },
             },
           },
@@ -126,7 +126,12 @@ function ProductChartComponent() {
   ]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center">
+        <div className="text-xl font-bold text-blue-700 mb-2">Loading...</div>
+      </div>
+    );
+    
   }
 
   if (error) {

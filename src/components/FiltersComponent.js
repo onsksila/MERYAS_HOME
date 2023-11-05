@@ -28,12 +28,12 @@ function FiltersComponent() {
     <div className="flex flex-row justify-center space-x-4">
       <div>
         <button className="px-2 py-1 bg-indigo-200 text-indigo-800 rounded-md" onClick={handleMinButtonClick}>
-          Minimum Rated Product
+        Product with Lowest Rating
         </button>
       </div>
       <div>
         <button className="px-2 py-1 bg-indigo-200 text-indigo-800 rounded-md" onClick={handleMaxButtonClick}>
-          Maximum Rate Product
+        Product with Highest Rating
         </button>
       </div>
       <div>
