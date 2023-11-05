@@ -1,5 +1,5 @@
 // productActions.js
-import { setProducts, setLoading, setError, setMaxRatedProduct, setMinRatedProduct, setMostRatedProduct, setLeastRatedProduct } from './productSlice';
+import { setCategory, getCategories,setProducts, setLoading, setError, setMaxRatedProductId, setMinRatedProductId, setMostRatedProductId, setLeastRatedProductId } from './productSlice';
 
 export const fetchProducts = () => async (dispatch) => {
   try {
@@ -17,6 +17,8 @@ export const fetchProducts = () => async (dispatch) => {
   }
 };
 
+
+
 export const findMaxRatedProduct = () => (dispatch, getState) => {
     const products = getState().products.data;
     if (products.length === 0) {
@@ -27,7 +29,7 @@ export const findMaxRatedProduct = () => (dispatch, getState) => {
       return product.rating.rate > max.rating.rate ? product : max;
     }, products[0]);
   
-    dispatch(setMaxRatedProduct(maxRatedProduct));
+    dispatch(setMaxRatedProductId(maxRatedProduct));
 };
   
 export const findMinRatedProduct = () => (dispatch, getState) => {
@@ -40,7 +42,7 @@ export const findMinRatedProduct = () => (dispatch, getState) => {
       return product.rating.rate < min.rating.rate ? product : min;
     }, products[0]);
   
-    dispatch(setMinRatedProduct(minRatedProduct));
+    dispatch(setMinRatedProductId(minRatedProduct));
 };
   
 
@@ -54,7 +56,7 @@ export const findMostRatedProduct = () => (dispatch, getState) => {
       return product.rating.count > mostRated.rating.count ? product : mostRated;
     }, products[0]);
   
-    dispatch(setMostRatedProduct(mostRatedProduct));
+    dispatch(setMostRatedProductId(mostRatedProduct));
 };
   
 export const findLeastRatedProduct = () => (dispatch, getState) => {
@@ -67,5 +69,29 @@ export const findLeastRatedProduct = () => (dispatch, getState) => {
       return product.rating.count < leastRated.rating.count ? product : leastRated;
     }, products[0]);
   
-    dispatch(setLeastRatedProduct(leastRatedProduct));
+    dispatch(setLeastRatedProductId(leastRatedProduct));
   };
+  
+  export const getAllCategories = () => (dispatch, getState) => {
+    const products = getState().products.data;
+    if (products.length === 0) {
+      return;
+    }
+  
+    const categories = products.reduce((acc, product) => {
+      if (!acc.includes(product.category)) {
+        acc.push(product.category);
+      }
+      return acc;
+    }, []);
+    dispatch(getCategories(categories));
+
+};
+  
+
+export const getProductByCategory = (category) => (dispatch, getState) => {
+  const products = getState().products.data;
+  const filteredProducts = products.filter(product => product.category === category);
+  dispatch(setCategory(filteredProducts));
+};
+
