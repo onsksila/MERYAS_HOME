@@ -1,4 +1,3 @@
-// productSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const productSlice = createSlice({
@@ -13,7 +12,6 @@ const productSlice = createSlice({
     leastRatedProductId: null,
     categories : [],
     choosenCategory: []
-    // choosenCategory: null,
   },
   reducers: {
     setProducts: (state, action) => {

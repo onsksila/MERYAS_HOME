@@ -1,4 +1,3 @@
-//productChartComponent.js
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../redux/product/productActions";
@@ -24,40 +23,7 @@ function ProductChartComponent() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (products.length > 0) {
-      if (chartRef.current) {
-        if (chartRef.current.chart) {
-          chartRef.current.chart.destroy();
-        }
-
-        const chartData = {
-          labels: products.map((product) => product.title),
-          datasets: [
-            {
-              label: "Taux de notation",
-              data: products.map((product) => product.rating.rate),
-              backgroundColor: "rgba(75, 192, 192, 0.2)",
-              borderColor: "rgba(75, 192, 192, 1)",
-              borderWidth: 3,
-            },
-          ],
-        };
-
-        const newChart = new Chart(chartRef.current, {
-          type: "bar",
-          data: chartData,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
-
-        chartRef.current.chart = newChart;
-      }
-    }
+    initialChart();
   }, [products]);
 
   const updateChartWithData = (productId) => {
@@ -74,7 +40,7 @@ function ProductChartComponent() {
     }
   };
 
-  const updateChartWithDataCata = (newData) => {
+  const updateChartWithCategorialFilter = (newData) => {
     const myChart = chartRef.current?.chart;
 
     if (myChart) {
@@ -97,13 +63,60 @@ function ProductChartComponent() {
     }
   };
 
+  const initialChart = () => {
+    if (products.length > 0) {
+      if (chartRef.current) {
+        if (chartRef.current.chart) {
+          chartRef.current.chart.destroy();
+        }
+
+        const chartData = {
+          labels: products.map((product) => product.title),
+          datasets: [
+            {
+              label: "Ratings Rate",
+              data: products.map((product) => product.rating.rate),
+              backgroundColor: "rgb(199 210 254)",
+              borderColor: "rgb(67 56 202)",
+              borderWidth: 3,
+            },
+          ],
+        };
+
+        const newChart = new Chart(chartRef.current, {
+          type: "bar",
+          data: chartData,
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "Rates",
+                },
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: "Products",
+                },
+                maxRotation: 90, // Définit la rotation maximale à 0 degré (vertical)
+              minRotation: 90, // Définit la rotation minimale à 0 degré (vertical)
+              },
+            },
+          },
+        });
+        chartRef.current.chart = newChart;
+      }
+    }
+  };
+
   useEffect(() => {
     updateChartWithData(minRatedProductId);
     updateChartWithData(maxRatedProductId);
     updateChartWithData(mostRatedProductId);
     updateChartWithData(leastRatedProductId);
-    choosenCategory && updateChartWithDataCata(choosenCategory);
-    //updateChartWithData(choosenCategory);
+    choosenCategory && updateChartWithCategorialFilter(choosenCategory);
   }, [
     minRatedProductId,
     maxRatedProductId,
@@ -120,7 +133,17 @@ function ProductChartComponent() {
     return <div>Error: {error}</div>;
   }
 
-  return <canvas ref={chartRef} width={800} height={400}></canvas>;
+  const handleResetClick = () => {
+    initialChart();
+  };
+
+  return (
+    <div className="p-4 flex flex-col items-center">
+    <button className="px-2 py-1 bg-indigo-200 text-indigo-800 rounded-md mb-2" onClick={() => handleResetClick()}>Reset</button>
+    <canvas ref={chartRef} ></canvas>
+  </div>
+  
+  );
 }
 
 export default ProductChartComponent;

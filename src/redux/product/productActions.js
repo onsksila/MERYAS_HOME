@@ -1,4 +1,3 @@
-// productActions.js
 import { setCategory, getCategories,setProducts, setLoading, setError, setMaxRatedProductId, setMinRatedProductId, setMostRatedProductId, setLeastRatedProductId } from './productSlice';
 
 export const fetchProducts = () => async (dispatch) => {
